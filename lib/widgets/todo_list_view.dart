@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_todo/home/models.dart';
-import 'package:flutter_todo/home/todo_item_tile.dart';
+import 'package:flutter_todo/models/models.dart';
+import 'package:flutter_todo/widgets/todo_item_tile.dart';
 
 class TodoListView extends StatelessWidget {
   List<TodoItem> todos;
-  // final VoidCallback<String> deleteItem;
-  // VoidCallback<String> deleteItem;
   final ValueChanged<String> deleteItem;
   final ValueChanged<String> toggleItem;
 

@@ -18,7 +18,6 @@ class TodoItemTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       title: Text(title),
-      // subtitle: ,
       trailing: Row(
         mainAxisSize: MainAxisSize.min,
         children: [

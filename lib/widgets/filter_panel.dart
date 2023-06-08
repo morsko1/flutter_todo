@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_todo/home/models.dart';
+import 'package:flutter_todo/models/models.dart';
 
 class FilterPanel extends StatelessWidget {
   final ValueChanged<Filter?> onChanged;

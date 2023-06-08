@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_todo/home/filter_panel.dart';
-import 'package:flutter_todo/home/todo_list_view.dart';
-import 'new_task_dialog.dart';
-import 'models.dart';
+import 'package:flutter_todo/models/models.dart';
+import 'package:flutter_todo/widgets/filter_panel.dart';
+import 'package:flutter_todo/widgets/todo_list_view.dart';
+import 'package:flutter_todo/widgets/new_task_dialog.dart';
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key});
+class MainPage extends StatefulWidget {
+  const MainPage({super.key});
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<MainPage> createState() => _MainPageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _MainPageState extends State<MainPage> {
   List<TodoItem> todos = [
     TodoItem(title: 'title 1'),
     TodoItem(title: 'title 2'),
@@ -111,4 +111,3 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
-

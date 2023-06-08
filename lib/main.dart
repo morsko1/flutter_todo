@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'home/index.dart';
+import 'package:flutter_todo/pages/main_page.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const App());
 }
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class App extends StatelessWidget {
+  const App({super.key});
 
   // This widget is the root of your application.
   @override
@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.lightBlueAccent),
         useMaterial3: true,
       ),
-      home: const MyHomePage(),
+      home: const MainPage(),
     );
   }
 }
