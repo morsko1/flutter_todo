@@ -1,14 +1,25 @@
 import 'package:flutter/material.dart';
 
-class NewTaskDialog extends StatelessWidget {
+class NewTaskDialog extends StatefulWidget {
   final ValueChanged<String> onSubmit;
-  final TextEditingController _textFieldController;
 
   const NewTaskDialog({
     super.key,
-    required TextEditingController textFieldController,
     required this.onSubmit,
-  }) : _textFieldController = textFieldController;
+  });
+
+  @override
+  State<NewTaskDialog> createState() => _NewTaskDialogState();
+}
+
+class _NewTaskDialogState extends State<NewTaskDialog> {
+  final TextEditingController _textFieldController = TextEditingController();
+
+  @override
+  void dispose() {
+    _textFieldController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +48,7 @@ class NewTaskDialog extends StatelessWidget {
               Navigator.of(context).pop();
               return;
             }
-            onSubmit(inputValue);
+            widget.onSubmit(inputValue);
             Navigator.of(context).pop();
           },
         ),

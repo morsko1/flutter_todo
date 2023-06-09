@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_todo/models/models.dart';
+import 'package:flutter_todo/utils/utils.dart';
 import 'package:flutter_todo/widgets/filter_panel.dart';
 import 'package:flutter_todo/widgets/todo_list_view.dart';
 import 'package:flutter_todo/widgets/new_task_dialog.dart';
@@ -34,12 +35,8 @@ class _MainPageState extends State<MainPage> {
 
   void _toggleItem(String id) {
     setState(() {
-      for (var todo in todos) {
-        if (todo.id == id) {
-          todo.done = !todo.done;
-          break;
-        }
-      }
+      TodoItem todo = todos.firstWhere((item) => item.id == id);
+      todo.done = !todo.done;
     });
   }
 
@@ -49,42 +46,18 @@ class _MainPageState extends State<MainPage> {
     });
   }
 
-  // TODO: move text controller to dialog
-  final TextEditingController _textFieldController = TextEditingController();
-
-  @override
-  void dispose() {
-    _textFieldController.dispose();
-    super.dispose();
-  }
-
-  Future<void> _dialogBuilder(BuildContext context) async {
-    return await showDialog<void>(
+  Future<void> _dialogBuilder(BuildContext context) {
+    return showDialog<void>(
       context: context,
       builder: (BuildContext context) {
-        return NewTaskDialog(
-          textFieldController: _textFieldController,
-          onSubmit: _addItem,
-        );
+        return NewTaskDialog(onSubmit: _addItem);
       },
-    ).then((value) {
-      _textFieldController.clear();
-    });
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    List<TodoItem> todosFiltered;
-    switch (filter) {
-      case Filter.done:
-        todosFiltered = todos.where((todo) => todo.done).toList();
-        break;
-      case Filter.active:
-        todosFiltered = todos.where((todo) => !todo.done).toList();
-        break;
-      default:
-        todosFiltered = todos;
-    }
+    List<TodoItem> todosFiltered = filterTodos(todos, filter);
 
     return Scaffold(
       appBar: AppBar(
