@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_todo/models/models.dart';
-import 'package:flutter_todo/widgets/todo_item_tile.dart';
 
 class TodoListView extends StatelessWidget {
   List<TodoItem> todos;
@@ -16,20 +15,35 @@ class TodoListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: todos.length,
-      itemBuilder: (context, index) {
-        return TodoItemTile(
-          title: todos[index].title,
-          done: todos[index].done,
-          onDelete: () {
-            deleteItem(todos[index].id);
-          },
-          onToggle: (value) {
-            toggleItem(todos[index].id);
-          },
-        );
-      },
-    );
+    return todos.isNotEmpty
+      ? ListView.builder(
+        itemCount: todos.length,
+        itemBuilder: (context, index) {
+          return ListTile(
+            title: Text(todos[index].title, style: const TextStyle(fontSize: 20.0)),
+            trailing: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Checkbox(
+                  value: todos[index].done,
+                  onChanged: (value) {
+                    toggleItem(todos[index].id);
+                  },
+                ),
+                IconButton(
+                  icon: const Icon(Icons.delete),
+                  onPressed: () {
+                    deleteItem(todos[index].id);
+                  },
+                ),
+              ],
+            ),
+          );
+        },
+      )
+      : const Padding(
+          padding: EdgeInsets.only(top: 12.0),
+          child: Text('No tasks', style: TextStyle(fontSize: 20.0)),
+      );
   }
 }

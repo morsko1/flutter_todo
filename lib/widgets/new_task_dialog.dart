@@ -41,6 +41,15 @@ class _NewTaskDialogState extends State<NewTaskDialog> {
           style: TextButton.styleFrom(
             textStyle: Theme.of(context).textTheme.labelLarge,
           ),
+          child: const Text('Cancel'),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
+        TextButton(
+          style: TextButton.styleFrom(
+            textStyle: Theme.of(context).textTheme.labelLarge,
+          ),
           child: const Text('Ok'),
           onPressed: () {
             String inputValue = _textFieldController.text;

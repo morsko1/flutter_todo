@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:convert';
 import 'package:flutter_todo/models/models.dart';
 import 'package:flutter_todo/utils/utils.dart';
 import 'package:flutter_todo/widgets/filter_panel.dart';
@@ -13,23 +15,44 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  List<TodoItem> todos = [
-    TodoItem(title: 'title 1'),
-    TodoItem(title: 'title 2'),
-    TodoItem(title: 'title 3'),
-  ];
-
+  List<TodoItem> todos = [];
   Filter filter = Filter.all;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadData();
+  }
+
+  Future<void> _loadData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? storedData = prefs.getString('todos');
+    if (storedData != null) {
+      Iterable decoded = jsonDecode(storedData);
+      List<TodoItem> todosDecoded = decoded.map((item) => TodoItem.fromJson(item)).toList();
+      setState(() {
+        todos = todosDecoded;
+      });
+    }
+  }
+
+  Future<void> _saveData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String encoded = jsonEncode(todos);
+    await prefs.setString('todos', encoded);
+  }
 
   void _addItem(String title) {
     setState(() {
       todos.add(TodoItem(title: title));
+      _saveData();
     });
   }
 
   void _deleteItem(String id) {
     setState(() {
       todos = todos.where((todo) => todo.id != id).toList();
+      _saveData();
     });
   }
 
@@ -37,6 +60,7 @@ class _MainPageState extends State<MainPage> {
     setState(() {
       TodoItem todo = todos.firstWhere((item) => item.id == id);
       todo.done = !todo.done;
+      _saveData();
     });
   }
 
